@@ -1,0 +1,38 @@
+import requests
+import html
+from xml.sax.saxutils import unescape
+url="https://vip.shinkong-place.com:8001/Webservice/WSUmall.php?WSDL"
+headers = {'content-type': 'application/soap+xml'}
+#headers = {'content-type': 'text/xml'}
+body = """
+<soap:Envelope
+    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+    xmlns:xsd='http://www.w3.org/2001/XMLSchema'
+    xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/'>
+    <soap:Body>
+        <UmallService
+            xmlns="http://utk.com/">
+            <receiveData>
+                <![CDATA[
+               <Trans>
+<T0100>0100</T0100>
+<T0200>620500001463313</T0200>
+<T0232>vnwN44aT7nZrGmE7</T0232>
+<T0300>200150</T0300>
+<T1200>113745</T1200>
+<T1300>20220919</T1300>
+<T1304>202209</T1304>
+<T4200>3010</T4200>
+<T4100>11012003</T4100>
+<T5509>W</T5509>
+<T5531>EW703010</T5531>
+</Trans>
+
+                ]]>
+            </receiveData>
+        </UmallService>
+    </soap:Body>
+</soap:Envelope>"""
+response = requests.post(url,data=body,headers=headers)
+result = html.unescape(response.text)
+print(result)
